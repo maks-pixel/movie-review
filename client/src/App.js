@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, isValidElement} from "react"
 import './App.css';
 import Axios from 'axios'
 
@@ -6,11 +6,11 @@ function App() {
 
   const [movieName, setMovieName] = useState('')
   const [movieReview, setMovieReview] = useState('')
-  const [ movieReviwList, setMovieList] = useState([]);
+  const [movieReviewList, setMovieList] = useState([]);
 
   useEffect(() => {
     Axios.get ('http://localhost:3001/api/get').then((response) => {
-      console.log(response.data);
+      //console.log(response.data);
       setMovieList(response.data)
     })
   })
@@ -22,7 +22,7 @@ function App() {
   })
   // add the URL for the insert query to connect to the backend in the server/index.js file
   };
-
+  //make sure that when mapping the response from the get function connected to the back end you match the value names used in the console.log 
   return (
     <div className="App">
       <h1>CRUD APPLICATION</h1>
@@ -40,10 +40,11 @@ function App() {
         />
 
         <button onClick = {submitReview}> submit </button>
-
-        {movieReviewList.mao()}
-      </div>
-
+        
+        {movieReviewList.map((val) => {
+          return<h1>Movie Name: {val.movie_name} | Movie Review: {val.movie_review}</h1>
+        })}   
+        </div>
     </div>
   );
 }
